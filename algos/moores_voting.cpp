@@ -35,7 +35,7 @@ int majorityElement(vector<int> A)
 }
 
 int main()
-{   vector<int> A={3,1,3,1,3,3,5,3,7};
+{   vector<int> A={1,2,3};
 
     cout<<majorityElement(A);
     return 0;

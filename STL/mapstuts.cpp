@@ -25,9 +25,11 @@ for(auto &itr:m)
     cout<<itr.first<<"  "<<itr.second; 
 }
 
-auto it= m.find(5);
 
-cout<<(*it).second<<endl;
+auto it=m.begin();
+cout<<(*it).first<<endl;
+advance(it,2);
+cout<<(*it).first<<endl;
 
     return 0;
 }
