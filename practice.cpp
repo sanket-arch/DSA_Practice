@@ -1,25 +1,70 @@
 #include <iostream>
 #include <algorithm>
+#include <math.h>
 #include <vector>
 using namespace std;
-int minSwaps(vector<int> &nums)
+int firstRepeated(int A[], int n)
 {
-    vector<int> A=nums;
-    int count = 0;
-    sort(A.begin(), A.end());
-   
-    for (int i = 0; i < A.size(); i++)
+    if (n == 1)
     {
-        if (A[i] != nums[i])
-            count++;
+        return -1;
     }
-    return count/2;
+    if (n == 2)
+    {
+        if (A[0] == A[1])
+            return 1;
+        else 
+            return -1;
+    }
+    long long max = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (A[i] > max)
+        {
+            max = A[i];
+        }
+    }
+    long long *H = new long long[max];
+    long long *k = new long long[max];
+    long long index = n + 1;
+
+    for (int i = 0; i < n; i++)
+    {
+        H[A[i]] = 0;
+        k[A[i]] = 0;
+    }
+    for (int i = 0; i < n; i++)
+    {
+        H[A[i]]++;
+        if (k[A[i]] == 0)
+        {
+            k[A[i]] = i + 1;
+        }
+    }
+    for (int i = 0; i <= max; i++)
+    {
+        if (H[i] > 1 && k[i] != 0)
+        {
+            if (k[i] < index)
+                index = k[i];
+        }
+    }
+
+    if (index == n + 1)
+    {
+        return -1;
+    }
+    else
+    {
+        return index;
+    }
 }
 
 int main()
 {
-    vector<int> nums = {2, 8, 5, 4};
+    int nums[] = {1,2,3,4,4};
+    int size = sizeof(nums) / sizeof(nums[0]);
 
-    cout<<minSwaps(nums);
+    cout << firstRepeated(nums, size);
     return 0;
 }
