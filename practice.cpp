@@ -1,70 +1,59 @@
 #include <iostream>
-#include <algorithm>
-#include <math.h>
-#include <vector>
+
 using namespace std;
-int firstRepeated(int A[], int n)
+
+void rearrange(int A[], int n)
 {
-    if (n == 1)
-    {
-        return -1;
-    }
-    if (n == 2)
-    {
-        if (A[0] == A[1])
-            return 1;
-        else 
-            return -1;
-    }
-    long long max = 0;
+    int pos=0, neg=0;
     for (int i = 0; i < n; i++)
     {
-        if (A[i] > max)
-        {
-            max = A[i];
-        }
+        if (A[i] >= 0)
+            pos++;
+        else
+            neg++;
     }
-    long long *H = new long long[max];
-    long long *k = new long long[max];
-    long long index = n + 1;
+    int *posArr = new int[pos];
+    int *negArr = new int[neg];
+    int k = 0, i = 0, j = 0;
+    while (k < n)
+    {
+        if (A[k] >= 0)
 
-    for (int i = 0; i < n; i++)
-    {
-        H[A[i]] = 0;
-        k[A[i]] = 0;
+            posArr[i++] = A[k++];
+        else
+            negArr[j++] = A[k++];
     }
-    for (int i = 0; i < n; i++)
+    k = 0, i = 0, j = 0;
+    while(i < pos && j < neg)
     {
-        H[A[i]]++;
-        if (k[A[i]] == 0)
+        if (k % 2 == 0)
+            A[k++] = posArr[i++];
+        else
+            A[k++] = negArr[j++];
+    }
+    if(i>pos)
+    {
+        while(j<neg)
         {
-            k[A[i]] = i + 1;
+            A[k++]=negArr[j++];
         }
     }
-    for (int i = 0; i <= max; i++)
-    {
-        if (H[i] > 1 && k[i] != 0)
+    else{
+        while(i<pos)
         {
-            if (k[i] < index)
-                index = k[i];
+            A[k++]=negArr[i++];
         }
-    }
-
-    if (index == n + 1)
-    {
-        return -1;
-    }
-    else
-    {
-        return index;
     }
 }
-
 int main()
 {
-    int nums[] = {1,2,3,4,4};
-    int size = sizeof(nums) / sizeof(nums[0]);
+    int A[] = {-5, -2, 5, 2, 4, 7, 1, 8, 0, -8};
+    int size = sizeof(A) / sizeof(A[0]);
 
-    cout << firstRepeated(nums, size);
+    rearrange(A, size);
+    for (int i = 0; i < size; i++)
+    {
+        cout << A[i] << " ";
+    }
     return 0;
 }
