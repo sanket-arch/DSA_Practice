@@ -1,10 +1,9 @@
-// This code is not working properly need to be fixed
-#include <iostream>
-#include <stack>
+
+#include <bits/stdc++.h>
 using namespace std;
 bool isSymbol(char x)
 {
-    if (x == '+' || x == '-' || x == '*' || x == '\\')
+    if (x == '+' || x == '-' || x == '*' || x == '/')
         return true;
     else
         return false;
@@ -13,13 +12,13 @@ int prec(char symbol)
 {
     if (symbol == '+' || symbol == '-')
         return 1;
-    else if (symbol == '*' || symbol == '\\')
+    else if (symbol == '*' || symbol == '/')
         return 2;
     else
         return 0;
 }
-
-char *PostFix(char *infix, int size)
+// this  function is to conver infix to postfix
+char *PostFix(string infix, int size)
 {
     stack<char> exp;
     exp.push('#');
@@ -69,14 +68,11 @@ int operation(char op, int x, int y)
         return x / y;
     }
 }
-int main()
+
+int evaluatePowstfix(char *postfix, int size)
 {
-    char infix[] = "6+5*3-4\\2";
-    int size = sizeof(infix) / sizeof(infix[0]);
-    int i = 0, x1 = 0, x2 = 0, r;
     stack<int> expStack;
-    char *postfix = new char[size];
-    postfix = PostFix(infix, size);
+    int i = 0, x1 = 0, x2 = 0, r;
     while (i < size)
     {
         if (!isSymbol(postfix[i]))
@@ -90,18 +86,23 @@ int main()
             x1 = expStack.top();
             expStack.pop();
 
-            r = operation(postfix[i++], x1, x2);
+            r = operation(postfix[i], x1, x2);
             expStack.push(r);
+            i++;
         }
     }
     r = expStack.top();
     expStack.pop();
-    cout << r;
-    // while (!expStack.empty())
-    // {
-    //     cout << expStack.top();
-    //     expStack.pop();
-    // }
-    cout<<"level";
+    return r;
+}
+int main()
+{
+    string infix = "6+5*3-4/2";
+
+    char *postfix = new char[infix.size() + 1];
+    postfix = PostFix(infix, infix.size());
+    int value=evaluatePowstfix(postfix,infix.size());
+
+    cout<<value;
     return 0;
 }

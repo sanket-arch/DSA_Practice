@@ -1,97 +1,47 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <stack>
 using namespace std;
-class Stack
+bool ispar(string x)
 {
-    int size;
-    int top;
-    char *s;
-
-public:
-    Stack(int x) // constructor to instialize the top,and declare array of size x
+    stack<char> stk;
+    int i = 0;
+    if (x.size() == 1 || x[i] == '}' || x[i] == ']' || x[i] == ')')
     {
-        top = -1;
-        size = x;
-        s = new char[size];
-    }
-    ~Stack()
-    {
-        delete[] s;
-    }
-    bool isEmpty(); // this function will check whether stack is empty or not
-    bool isFull();  // this function will check whether stack is full or not
-    void push(char x);
-    void pop();
-    char stTop();
-};
-bool Stack::isEmpty()
-{
-    if (top == -1)
-        return true;
-    else
         return false;
-}
-bool Stack::isFull()
-{
-    if (top == size - 1)
-        return true;
-    else
-        return false;
-}
-char Stack::stTop()
-{
-    if (isEmpty())
-    {
-        return -1;
-    }
-    return s[top];
-}
-void Stack::push(char x)
-{
-    if (!isFull())
-    {
-        top++;
-        s[top] = x;
     }
     else
     {
-        cout << "overflow";
-    }
-}
-void Stack::pop()
-{
-    if (isEmpty())
-    {
-        cout << "stack underflow";
-    }
-    else
-    {
-        s[top--];
-    }
-}
-
-bool isBlance(string exp)
-{
-    Stack st(exp.length());
-
-    for (int i = 0; i < exp.size(); i++)
-    {
-        if (exp[i] == '(')
+        while (i < x.size())
         {
-            st.push(exp[i]);
-        }
-        else if (exp[i] == ')')
-        {
-            if (st.isEmpty())
-                return false;
-            else if (exp[i] == ')')
-                st.pop();
+            if (x[i] == '{' || x[i] == '[' || x[i] == '(')
+                stk.push(x[i++]);
+            else
+            {
+                if (stk.empty())
+                {
+                    return false;
+                }
+               
+                if (x[i] == '}' && stk.top() == '{' || x[i] == ')' && stk.top() == '(' || x[i] == ']' && stk.top() == '[')
+                {
+                    stk.pop();
+                    i++;
+                }
+                else
+                    return false;
+            }
         }
     }
-    return st.isEmpty() ? true : false;
+    if (stk.empty())
+
+        return true;
+
+    else
+        return false;
 }
 int main()
 {
-    string exp = "x+(a*(b+c)-(c-d))";
-    cout << isBlance(exp);
+    string exp = "())}}({)[]}{]([[}(]][[()()()]}]}]{[))}}[(]]{([(}]((}][[[{[()()(]}}})}])()[})[}}})(([(){{}({[}(((]}}}(]{(][{({[)([)][)(}({}{{[{((}(}[{(]{]]]]((})[{(][]{})}{{}]({(](}[){){)())(}([){({}}}[}}{((){]{){{])[";
+    cout << ispar(exp);
     return 0;
 }
