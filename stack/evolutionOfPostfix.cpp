@@ -97,12 +97,11 @@ int evaluatePowstfix(char *postfix, int size)
 }
 int main()
 {
-    string infix = "6+5*3-4/2";
+    string infix = "632-5*+1*7+";
 
     char *postfix = new char[infix.size() + 1];
     postfix = PostFix(infix, infix.size());
     int value=evaluatePowstfix(postfix,infix.size());
-
     cout<<value;
     return 0;
 }

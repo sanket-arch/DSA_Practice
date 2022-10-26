@@ -72,13 +72,9 @@ int main()
     int A[] = {10, 35, 1, 67, 45, 9};
     int size = sizeof(A) / sizeof(A[0]);
     queueClass queObj(size);
-    for (int i = 0; i < size; i++)
-    {
-        queObj.enque(A[i]);
-    }
+    queObj.enque(10);
     queObj.display();
-    queObj.dequeue();
-    queObj.display();
+   
     
     return 0;
 }

@@ -9,7 +9,8 @@ public:
 };
 
 // crating a doubly linked list
-node *create(int A[], int size)
+template<class T>
+node *create(T A[], int size)
 {
     node *head, *p; // pointer to head and a temporary pointer to iterate through LL
     for (int i = 0; i < size; i++)

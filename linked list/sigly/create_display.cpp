@@ -1,12 +1,12 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
-
 class node
 {
 public:
     int data;
     node *nxt;
 };
+
 
 node *create(int A[], int size)
 {

@@ -3,7 +3,7 @@
 using namespace std;
 bool isSymbol(char x)
 {
-    if (x == '+' || x == '-' || x == '*' || x == '/' )
+    if (x == '+' || x == '-' || x == '*' || x == '/')
         return true;
     else
         return false;
@@ -14,7 +14,8 @@ int prec(char symbol)
         return 1;
     else if (symbol == '*' || symbol == '/')
         return 2;
-
+    else if (symbol == '^')
+        return 3;
     else
         return 0;
 }
@@ -22,7 +23,7 @@ int main()
 {
     stack<char> exp;
     exp.push('#');
-    string infix = "6+5*3-4/2";
+    string infix = "A ^ B * C- D + E / F / G + H ";
     char *postfix = new char[infix.size()];
     int i = 0, j = 0;
 
@@ -54,6 +55,5 @@ int main()
     {
         cout << postfix[i++];
     }
-
     return 0;
 }

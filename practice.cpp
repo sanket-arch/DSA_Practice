@@ -1,59 +1,41 @@
-#include <iostream>
-
+#include <bits/stdc++.h>
 using namespace std;
-
-void rearrange(int A[], int n)
+int maximizeSum(int a[], int n)
 {
-    int pos=0, neg=0;
-    for (int i = 0; i < n; i++)
-    {
-        if (A[i] >= 0)
-            pos++;
-        else
-            neg++;
-    }
-    int *posArr = new int[pos];
-    int *negArr = new int[neg];
-    int k = 0, i = 0, j = 0;
-    while (k < n)
-    {
-        if (A[k] >= 0)
+	int MaxEle = -INFINITY;
+	for (int i = 0; i < n; i++)
+	{
+		MaxEle = max(MaxEle, a[i]);
+	}
+	int *freq=new int[MaxEle + 1];
 
-            posArr[i++] = A[k++];
-        else
-            negArr[j++] = A[k++];
-    }
-    k = 0, i = 0, j = 0;
-    while(i < pos && j < neg)
-    {
-        if (k % 2 == 0)
-            A[k++] = posArr[i++];
-        else
-            A[k++] = negArr[j++];
-    }
-    if(i>pos)
-    {
-        while(j<neg)
-        {
-            A[k++]=negArr[j++];
-        }
-    }
-    else{
-        while(i<pos)
-        {
-            A[k++]=negArr[i++];
-        }
-    }
+	memset(freq, 0, sizeof(freq));
+
+	for (int i = 0; i < n; i++)
+	{
+		freq[a[i]]++;
+	}
+
+	int x = MaxEle;
+	int sum = 0;
+	while (x > 0)
+	{
+		if (freq[x] > 0)
+		{
+			sum += x;
+			freq[x - 1]--;
+			freq[x]--;
+		}
+		else
+			x--;
+	}
+	return sum;
 }
+
 int main()
 {
-    int A[] = {-5, -2, 5, 2, 4, 7, 1, 8, 0, -8};
-    int size = sizeof(A) / sizeof(A[0]);
-
-    rearrange(A, size);
-    for (int i = 0; i < size; i++)
-    {
-        cout << A[i] << " ";
-    }
-    return 0;
+	int A[]={1,2,2,2,3,4};
+	int n=sizeof(A)/sizeof(A[0]);
+	cout<<maximizeSum(A,n);
+	return 0;
 }

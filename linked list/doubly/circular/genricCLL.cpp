@@ -7,6 +7,18 @@ public:
     int data;
     node *nxt;
 };
+
+class CircularLinkedList
+{
+    node *head;
+    node *last;
+
+public:
+    CircularLinkedList();
+    node *insertNode(int pos, int val);
+    node *deleteNodeByPos(int pos, int size);
+    void display();
+};
 node *create(int A[], int size)
 {
     node *head = new node;
@@ -139,7 +151,7 @@ int main()
     insertNode(head, 3, 40);
     size++;
     cout << endl;
-    cout<<"List after insertion"<<endl;
+    cout << "List after insertion" << endl;
     do
     {
         cout << p->data << "  ";
