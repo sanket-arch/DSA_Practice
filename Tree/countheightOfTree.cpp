@@ -102,6 +102,9 @@ public:
     void inorder(TreeNode *root);
     void postorder(TreeNode *root);
     void preorder(TreeNode *root);
+
+    int heightOfTree(TreeNode *p);
+    int sum(TreeNode *p);
 };
 
 TreeNode *Tree::createTree(int value, int pos = -1)
@@ -116,9 +119,9 @@ TreeNode *Tree::createTree(int value, int pos = -1)
         q.enqueue(root);
     }
     else
-    {   
-        //Enable while loop when u get array as a params
-        
+    {
+        // Enable while loop when u get array as a params
+
         // while (!q.isEmpty())
         // {
         p = q.top();
@@ -143,7 +146,7 @@ TreeNode *Tree::createTree(int value, int pos = -1)
     return root;
 }
 
-//left->node->right
+// left->node->right
 void Tree::inorder(TreeNode *root)
 {
     if (root == nullptr)
@@ -155,7 +158,7 @@ void Tree::inorder(TreeNode *root)
     inorder(root->rChild);
 }
 
-//left->right->node
+// left->right->node
 void Tree::postorder(TreeNode *root)
 {
     if (root == nullptr)
@@ -167,7 +170,7 @@ void Tree::postorder(TreeNode *root)
     cout << root->value << "  ";
 }
 
-//node->left->right
+// node->left->right
 void Tree::preorder(TreeNode *root)
 {
     if (root == nullptr)
@@ -178,6 +181,31 @@ void Tree::preorder(TreeNode *root)
     preorder(root->rChild);
 }
 
+// Counting Number of nodes
+int Tree::heightOfTree(TreeNode *p)
+{
+    int x, y;
+    if (p != nullptr)
+    {
+        x = heightOfTree(p->lChild);
+        y = heightOfTree(p->rChild);
+        return x + y + 1;
+    }
+    return 0;
+}
+
+// Sum of Nodes
+int Tree::sum(TreeNode *p)
+{
+    int x, y;
+    if (p != nullptr)
+    {
+        x = sum(p->lChild);
+        y = sum(p->rChild);
+        return x + y + p->value;
+    }
+    return 0;
+}
 int main()
 {
     Tree t;
@@ -187,11 +215,22 @@ int main()
     t.createTree(30, 1);
     t.createTree(40, 0);
 
+    cout << "inorder:=>";
     t.inorder(root);
     cout << endl;
+    cout << "postorder:=>";
     t.postorder(root);
 
     cout << endl;
+    cout << "preorder:=>";
     t.preorder(root);
+
+    cout << endl;
+    cout << "Nodes in the tree is:=>";
+    cout << t.heightOfTree(root);
+
+    cout << endl;
+    cout << "sum:=>";
+    cout << t.sum(root);
     return 0;
 }

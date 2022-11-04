@@ -102,6 +102,12 @@ public:
     void inorder(TreeNode *root);
     void postorder(TreeNode *root);
     void preorder(TreeNode *root);
+    void levelOrder(TreeNode *temp);
+
+    // iterative travesal
+    void IterativeInorder(TreeNode *temp);
+    void IterativePostorder(TreeNode *temp);
+    void IterativePreorder(TreeNode *temp);
 };
 
 TreeNode *Tree::createTree(int value, int pos = -1)
@@ -116,9 +122,9 @@ TreeNode *Tree::createTree(int value, int pos = -1)
         q.enqueue(root);
     }
     else
-    {   
-        //Enable while loop when u get array as a params
-        
+    {
+        // Enable while loop when u get array as a params
+
         // while (!q.isEmpty())
         // {
         p = q.top();
@@ -143,7 +149,7 @@ TreeNode *Tree::createTree(int value, int pos = -1)
     return root;
 }
 
-//left->node->right
+// left->node->right
 void Tree::inorder(TreeNode *root)
 {
     if (root == nullptr)
@@ -155,7 +161,7 @@ void Tree::inorder(TreeNode *root)
     inorder(root->rChild);
 }
 
-//left->right->node
+// left->right->node
 void Tree::postorder(TreeNode *root)
 {
     if (root == nullptr)
@@ -167,7 +173,7 @@ void Tree::postorder(TreeNode *root)
     cout << root->value << "  ";
 }
 
-//node->left->right
+// node->left->right
 void Tree::preorder(TreeNode *root)
 {
     if (root == nullptr)
@@ -176,6 +182,92 @@ void Tree::preorder(TreeNode *root)
     preorder(root->lChild);
 
     preorder(root->rChild);
+}
+
+// iterative inorder
+void Tree::IterativeInorder(TreeNode *temp)
+{
+    stack<TreeNode *> stk;
+
+    while (temp != nullptr || !stk.empty())
+    {
+        if (temp != nullptr)
+        {
+            stk.push(temp);
+            temp = temp->lChild;
+        }
+        else
+        {
+            temp = stk.top();
+            stk.pop();
+            cout << temp->value << " ";
+            temp = temp->rChild;
+        }
+    }
+}
+
+void Tree::IterativePreorder(TreeNode *temp)
+{
+    stack<TreeNode *> stk;
+
+    while (temp != nullptr || !stk.empty())
+    {
+        if (temp != nullptr)
+        {
+            cout << temp->value << " ";
+            stk.push(temp);
+            temp = temp->lChild;
+        }
+        else
+        {
+            temp = stk.top();
+            stk.pop();
+            temp = temp->rChild;
+        }
+    }
+}
+
+void Tree::IterativePostorder(TreeNode *temp)
+{
+    stack<TreeNode *> stk;
+
+    while (temp != nullptr || !stk.empty())
+    {
+        if (temp != nullptr)
+        {
+            stk.push(temp);
+            temp = temp->lChild;
+        }
+        else
+        {
+            temp = stk.top();
+            stk.pop();
+            temp = temp->rChild;
+        }
+    }
+}
+
+// Levelorder
+void Tree::levelOrder(TreeNode *temp)
+{
+    queue<TreeNode *> q;
+    cout << temp->value;
+    q.emplace(temp);  //emplace is used to add element at the end of the queue
+
+    while (!q.empty())
+    {
+        temp = q.front();
+        q.pop();
+        if (temp->lChild != nullptr)
+        {
+            cout << temp->lChild->value;
+            q.emplace(temp->lChild);
+        }
+        if(temp->rChild !=nullptr){
+            cout<<temp->rChild->value;
+            q.emplace(temp->rChild);
+        }
+    }
 }
 
 int main()
@@ -187,11 +279,13 @@ int main()
     t.createTree(30, 1);
     t.createTree(40, 0);
 
-    t.inorder(root);
+    // t.inorder(root);
     cout << endl;
-    t.postorder(root);
+    // t.postorder(root);
 
-    cout << endl;
-    t.preorder(root);
+    // cout << endl;
+    // t.preorder(root);
+
+    t.IterativePreorder(root);
     return 0;
 }
