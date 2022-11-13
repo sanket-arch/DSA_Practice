@@ -103,7 +103,8 @@ public:
     void postorder(TreeNode *root);
     void preorder(TreeNode *root);
 
-    int heightOfTree(TreeNode *p);
+    int numberOfNode(TreeNode *p);
+    int numberOfLeafnode(TreeNode *p);
     int sum(TreeNode *p);
 };
 
@@ -182,14 +183,35 @@ void Tree::preorder(TreeNode *root)
 }
 
 // Counting Number of nodes
-int Tree::heightOfTree(TreeNode *p)
+// this procedure is working in post order form
+int Tree::numberOfNode(TreeNode *p)
 {
     int x, y;
     if (p != nullptr)
     {
-        x = heightOfTree(p->lChild);
-        y = heightOfTree(p->rChild);
+        x = numberOfNode(p->lChild);
+        y = numberOfNode(p->rChild);
         return x + y + 1;
+    }
+    return 0;
+}
+
+
+//This function is not wiorking need some changes
+int Tree::numberOfLeafnode(TreeNode *p)
+{
+    int x, y;
+    if (p != nullptr)
+    {
+        x = numberOfLeafnode(p->lChild);
+        y = numberOfLeafnode(p->rChild);
+
+        if (!p->lChild && !p->rChild)
+        {
+            return x + y + 1;
+        }
+        else
+            return x + y;
     }
     return 0;
 }
@@ -214,6 +236,7 @@ int main()
     t.createTree(20, 1);
     t.createTree(30, 1);
     t.createTree(40, 0);
+    t.createTree(90, 1);
 
     cout << "inorder:=>";
     t.inorder(root);
@@ -227,10 +250,11 @@ int main()
 
     cout << endl;
     cout << "Nodes in the tree is:=>";
-    cout << t.heightOfTree(root);
+    cout << t.numberOfNode(root);
 
     cout << endl;
     cout << "sum:=>";
     cout << t.sum(root);
+
     return 0;
 }
