@@ -125,16 +125,16 @@ void Tree::postorder(Node *p)
     if (p)
     {
         postorder(p->left);
-        cout << p->value << " ";
         postorder(p->right);
+        cout << p->value << " ";
     }
 }
 void Tree::preorder(Node *p)
 {
     if (p)
     {
-        preorder(p->left);
         cout << p->value << " ";
+        preorder(p->left);
         preorder(p->right);
     }
 }

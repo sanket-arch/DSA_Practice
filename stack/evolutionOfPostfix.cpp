@@ -17,7 +17,7 @@ int prec(char symbol)
     else
         return 0;
 }
-// this  function is to conver infix to postfix
+// this  function is to convert infix to postfix
 char *PostFix(string infix, int size)
 {
     stack<char> exp;
